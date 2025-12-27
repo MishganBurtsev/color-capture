@@ -37,6 +37,7 @@ public class MainMenuFrame extends JFrame {
         // (including the frame's own setPreferredSize, which is a common way for JFrames)
         this.pack();
 
+        // must be done after pack
         this.setMinimumSize(new Dimension(FRAME_MINIMAL_WIDTH, FRAME_MINIMAL_HEIGHT));
 
         this.getRootPane().addComponentListener(new ComponentAdapter() {
@@ -55,7 +56,10 @@ public class MainMenuFrame extends JFrame {
 
     private JButton createNewGameButton() {
         var newGameButton = new JButton("New game");
-        // TODO implement
+        newGameButton.addActionListener((e) -> {
+           this.setVisible(false);
+           Frames.getNewGameFrame().setVisible(true);
+        });
         return newGameButton;
     }
 
@@ -69,7 +73,7 @@ public class MainMenuFrame extends JFrame {
         var exitButton = new JButton("Exit game");
         exitButton.addActionListener((e) -> {
             // exit from main menu
-            this.dispose();
+            System.exit(0);
         });
         return exitButton;
     }

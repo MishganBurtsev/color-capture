@@ -1,6 +1,6 @@
 package org.mishgan.color_capture;
 
-import org.mishgan.color_capture.frame.MainMenuFrame;
+import org.mishgan.color_capture.frame.Frames;
 
 import javax.swing.*;
 
@@ -14,8 +14,6 @@ public class ViewModelSwingMain {
             throw new RuntimeException(e);
         }
 
-        var mainMenuFrame = new MainMenuFrame();
-
-        mainMenuFrame.setVisible(true);
+        Frames.getMainMenuFrame().setVisible(true);
     }
 }
