@@ -1,2 +1,2 @@
 rootProject.name = 'view-model-swing'
-include 'view-model-swing'
+include ('view-model-swing', 'logic-model')

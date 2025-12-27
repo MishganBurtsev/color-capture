@@ -1,21 +1,6 @@
 package org.mishgan.color_capture;
 
-public class Point {
-    private final int x;
-    private final int y;
-
-    private Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
+public record Point(int x, int y) {
 
     /**
      * Check that this point is in rect (0, 0, rect.x, rect.y)

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class GameSettingsBuilder {
     public static final byte MAX_PLAYER_COUNT = 8;
+    public static final byte MAX_NEUTRAL_COLORS_COUNT = 100;
     public static final Point MAX_MAP_SIZE = Point.create(255, 255);
 
     public static final String ADD_NULL_PLAYER_ERROR = "Cannot add null player";
@@ -15,6 +16,7 @@ public class GameSettingsBuilder {
 
     private List<Player> players = new ArrayList<>();
     private Point mapSize;
+    private int neutralColorsCount = 50;
 
     public GameSettingsBuilder addPlayer(Player player) {
         if (player == null) {
@@ -32,6 +34,13 @@ public class GameSettingsBuilder {
     public GameSettingsBuilder mapSize(Point mapSize) {
         if (mapSize != null && mapSize.isInRect(MAX_MAP_SIZE)) {
             this.mapSize = mapSize;
+        }
+        return this;
+    }
+
+    public GameSettingsBuilder neutralColorsCount(int count) {
+        if (count > 0 && count <= MAX_NEUTRAL_COLORS_COUNT) {
+            this.neutralColorsCount = count;
         }
         return this;
     }
@@ -54,6 +63,6 @@ public class GameSettingsBuilder {
             }
         }
 
-        return new GameSettings(players, mapSize);
+        return new GameSettings(players, mapSize, neutralColorsCount);
     }
 }

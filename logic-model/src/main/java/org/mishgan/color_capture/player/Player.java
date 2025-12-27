@@ -6,8 +6,8 @@ public class Player {
     private byte colorNumber;
     private Point startPosition;
 
-    public Player colorNumber(byte colorNumber) {
-        this.colorNumber = colorNumber;
+    public Player colorNumber(int colorNumber) {
+        this.colorNumber = (byte) colorNumber;
         return this;
     }
 

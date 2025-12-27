@@ -1,5 +1,13 @@
 package org.mishgan.color_capture.frame;
 
+import org.mishgan.color_capture.Point;
+import org.mishgan.color_capture.game.GameDataGenerator;
+import org.mishgan.color_capture.game.RandomGameDataGenerator;
+import org.mishgan.color_capture.player.Player;
+import org.mishgan.color_capture.settings.GameSettings;
+import org.mishgan.color_capture.settings.GameSettingsBuilder;
+import org.mishgan.color_capture.settings.ViewGameSettings;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import java.awt.*;
@@ -59,11 +67,48 @@ public class NewGameFrame extends JFrame {
 
     private JButton createStartGameButton() {
         var startNewGameButton = new JButton(" Start New Game -> ");
+        startNewGameButton.addActionListener((e) -> {
+            // TODO add form to manipulate game settings
+            // temp hardcode
+            var gameSettings = createGameSettings();
+            var viewGameSettings = createViewGameSettings(gameSettings);
+
+            GameDataGenerator gameDataGenerator = new RandomGameDataGenerator();
+            var gameData = gameDataGenerator.generate(gameSettings);
+
+
+        });
         return startNewGameButton;
     }
 
     private void backToMainMenu() {
         this.setVisible(false);
         Frames.getMainMenuFrame().setVisible(true);
+    }
+
+    private GameSettings createGameSettings() {
+        var mapSize = Point.create(20, 20);
+
+        GameSettingsBuilder gameSettingsBuilder = new GameSettingsBuilder()
+                .mapSize(mapSize)
+                .addPlayer(new Player()
+                        .colorNumber(0)
+                        .startPosition(Point.create(0, 0)))
+                .addPlayer(new Player()
+                        .colorNumber(1)
+                        .startPosition(Point.create(mapSize.x() - 1, mapSize.y() - 1)));
+
+        GameSettings gameSettings = gameSettingsBuilder.build();
+        return gameSettings;
+    }
+
+    private ViewGameSettings createViewGameSettings(GameSettings gameSettings) {
+        ViewGameSettings viewGameSettings = new ViewGameSettings(
+                gameSettings.getPlayerCount(),
+                gameSettings.getNeutralColorsCount());
+        viewGameSettings.setColor(0, Color.RED);
+        viewGameSettings.setColor(1, Color.BLUE);
+        viewGameSettings.generateRandomColors();
+        return viewGameSettings;
     }
 }
