@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GameFieldPanel extends JPanel {
 
-    private static final int SQUARE_SIZE = 50;
+    private static final int SQUARE_SIZE = 40;
 
     private final GameData gameData;
     private final ViewGameSettings viewGameSettings;
@@ -39,7 +39,7 @@ public class GameFieldPanel extends JPanel {
                 Color color = viewGameSettings.getColor(colorNumber);
 
                 g2d.setColor(color);
-                g2d.fillRect(viewX, viewY, viewX + SQUARE_SIZE, viewY + SQUARE_SIZE);
+                g2d.fillRect(viewX, viewY, SQUARE_SIZE, SQUARE_SIZE);
             }
         }
 

@@ -15,6 +15,7 @@ public class GameFrame extends JFrame {
 
     private GameData gameData;
     private ViewGameSettings viewGameSettings;
+    private final Timer repaintTimer;
 
     public GameFrame(GameData gameData, ViewGameSettings viewGameSettings) {
         super("Color Capture");
@@ -45,9 +46,19 @@ public class GameFrame extends JFrame {
         });
 
         this.pack();
+
+        // making full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        // init timer
+        this.repaintTimer = new Timer(1000, (e) -> {
+           mainPanel.repaint();
+        });
+        repaintTimer.start();
     }
 
     private void backToMainMenu() {
+        repaintTimer.stop();
         this.dispose();
         Frames.getMainMenuFrame().setVisible(true);
     }
