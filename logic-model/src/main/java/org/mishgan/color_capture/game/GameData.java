@@ -11,4 +11,12 @@ public class GameData {
         this.gameSettings = gameSettings;
         this.gameField = gameField;
     }
+
+    public GameField getGameField() {
+        return gameField;
+    }
+
+    public GameSettings getGameSettings() {
+        return gameSettings;
+    }
 }

@@ -16,6 +16,10 @@ public class ViewGameSettings {
         colors[colorNumber] = color;
     }
 
+    public Color getColor(int colorNumber) {
+        return colors[colorNumber];
+    }
+
     /**
      * Generates random colors for not filled colors
      */

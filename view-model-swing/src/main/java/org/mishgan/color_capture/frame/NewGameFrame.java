@@ -76,7 +76,10 @@ public class NewGameFrame extends JFrame {
             GameDataGenerator gameDataGenerator = new RandomGameDataGenerator();
             var gameData = gameDataGenerator.generate(gameSettings);
 
+            GameFrame gameFrame = new GameFrame(gameData, viewGameSettings);
 
+            NewGameFrame.this.setVisible(false);
+            gameFrame.setVisible(true);
         });
         return startNewGameButton;
     }
