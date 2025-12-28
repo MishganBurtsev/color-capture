@@ -16,8 +16,8 @@ public class RandomGameDataGenerator implements GameDataGenerator {
         var neutralColorCount = gameSettings.getNeutralColorsCount();
 
         var random = new Random();
-        var lowBound = playerCount - 1;
-        var highBound = neutralColorCount + lowBound + 1;
+        var lowBound = playerCount;
+        var highBound = neutralColorCount + lowBound;
 
         for (int i = 0; i < gameField.getXSize(); i++) {
             for (int j = 0; j < gameField.getYSize(); j++) {

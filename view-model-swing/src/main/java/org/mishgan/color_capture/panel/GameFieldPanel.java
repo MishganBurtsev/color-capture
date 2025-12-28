@@ -6,6 +6,10 @@ import org.mishgan.color_capture.settings.ViewGameSettings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.AffineTransform;
 
 public class GameFieldPanel extends JPanel {
 
@@ -15,6 +19,9 @@ public class GameFieldPanel extends JPanel {
     private final ViewGameSettings viewGameSettings;
     private final RenderCamera renderCamera = new RenderCamera();
 
+    private Point mouseClickedPoint;
+    private Point startDragCameraPoint;
+
     public GameFieldPanel(GameData gameData, ViewGameSettings viewGameSettings) {
         this.viewGameSettings = viewGameSettings;
         this.gameData = gameData;
@@ -23,6 +30,55 @@ public class GameFieldPanel extends JPanel {
         int cameraXCoord = SQUARE_SIZE * gameData.getGameField().getXSize() / 2;
         int cameraYCoord = SQUARE_SIZE * gameData.getGameField().getYSize() / 2;
         renderCamera.setPosition(-cameraXCoord, -cameraYCoord);
+
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (mouseClickedPoint != null && !e.getPoint().equals(mouseClickedPoint)) {
+                    renderCamera.setPosition(
+                            startDragCameraPoint.getX() + e.getX() - mouseClickedPoint.getX(),
+                            startDragCameraPoint.getY() + e.getY() - mouseClickedPoint.getY()
+                    );
+                }
+            }
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Point myPoint = new Point();
+                    AffineTransform t = renderCamera.getTransform();
+                    t.inverseTransform(e.getPoint(), myPoint);
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        // TODO logic to left mouse button
+                    } else if (SwingUtilities.isRightMouseButton(e)) {
+                        // TODO logic for right mouse button
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mouseClickedPoint = e.getPoint();
+                startDragCameraPoint = renderCamera.getPosition();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                mouseClickedPoint = null;
+                startDragCameraPoint = null;
+            }
+        });
+
+        addMouseWheelListener(e -> {
+            if (e.getWheelRotation() < 0) {
+                renderCamera.increaseScale();
+            } else if (e.getWheelRotation() > 0) {
+                renderCamera.decreaseScale();
+            }
+        });
     }
 
     @Override

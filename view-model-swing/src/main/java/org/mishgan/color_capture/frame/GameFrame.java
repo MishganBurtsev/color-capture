@@ -51,7 +51,7 @@ public class GameFrame extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // init timer
-        this.repaintTimer = new Timer(1000, (e) -> {
+        this.repaintTimer = new Timer(1000 / 60, (e) -> {
            mainPanel.repaint();
         });
         repaintTimer.start();

@@ -99,7 +99,8 @@ public class NewGameFrame extends JFrame {
                         .startPosition(Point.create(0, 0)))
                 .addPlayer(new Player()
                         .colorNumber(1)
-                        .startPosition(Point.create(mapSize.x() - 1, mapSize.y() - 1)));
+                        .startPosition(Point.create(mapSize.x() - 1, mapSize.y() - 1)))
+                .neutralColorsCount(5);
 
         GameSettings gameSettings = gameSettingsBuilder.build();
         return gameSettings;
