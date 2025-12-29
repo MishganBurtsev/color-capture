@@ -17,4 +17,27 @@ public record Point(int x, int y) {
         }
         return null;
     }
+
+    public Point getNeighbor(Direction direction) {
+        if (direction == null) {
+            throw new IllegalArgumentException("Direction is null!");
+        }
+
+        return Point.create(x + direction.incX, y + direction.incY);
+    }
+
+    public enum Direction {
+        NORTH(0, -1),
+        EAST(1, 0),
+        SOUTH(0, 1),
+        WEST(-1, 0);
+
+        private final int incX;
+        private final int incY;
+
+        Direction(int incX, int incY) {
+            this.incX = incX;
+            this.incY = incY;
+        }
+    }
 }

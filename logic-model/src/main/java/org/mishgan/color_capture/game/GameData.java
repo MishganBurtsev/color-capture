@@ -6,6 +6,7 @@ public class GameData {
 
     private final GameSettings gameSettings;
     private final GameField gameField;
+    private int currentMoveNumber = 1;
 
     public GameData(GameSettings gameSettings, GameField gameField) {
         this.gameSettings = gameSettings;
