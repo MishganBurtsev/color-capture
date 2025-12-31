@@ -8,8 +8,8 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.mishgan.color_capture.util.ValidationUtils.checkNotEmpty;
-import static org.mishgan.color_capture.util.ValidationUtils.checkNotNull;
+import static org.mishgan.color_capture.util.validation.GameValidation.checkNotEmpty;
+import static org.mishgan.color_capture.util.validation.GameValidation.checkNotNull;
 
 public class GameFieldUtils {
 

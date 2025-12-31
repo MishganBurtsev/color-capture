@@ -1,7 +1,7 @@
 package org.mishgan.color_capture.settings;
 
 import org.mishgan.color_capture.Point;
-import org.mishgan.color_capture.player.Player;
+import org.mishgan.color_capture.player.PlayerStartConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +14,17 @@ public class GameSettingsBuilder {
     public static final String ADD_NULL_PLAYER_ERROR = "Cannot add null player";
     public static final String MAX_PLAYER_REACHED = "Maximum player count reached";
 
-    private List<Player> players = new ArrayList<>();
+    private List<PlayerStartConfiguration> playerStartConfigurations = new ArrayList<>();
     private Point mapSize;
     private int neutralColorsCount = 50;
 
-    public GameSettingsBuilder addPlayer(Player player) {
-        if (player == null) {
+    public GameSettingsBuilder addPlayer(PlayerStartConfiguration playerStartConfiguration) {
+        if (playerStartConfiguration == null) {
             throw new GameSettingsException(ADD_NULL_PLAYER_ERROR);
         }
 
-        if (players.size() < MAX_PLAYER_COUNT) {
-            players.add(player);
+        if (playerStartConfigurations.size() < MAX_PLAYER_COUNT) {
+            playerStartConfigurations.add(playerStartConfiguration);
         } else {
             throw new GameSettingsException(MAX_PLAYER_REACHED);
         }
@@ -50,8 +50,8 @@ public class GameSettingsBuilder {
             throw new GameSettingsException("Map size is null");
         }
 
-        for (byte i = 0; i < players.size(); i++) {
-            var currentPlayer = players.get(i);
+        for (byte i = 0; i < playerStartConfigurations.size(); i++) {
+            var currentPlayer = playerStartConfigurations.get(i);
 
             // update player color
             currentPlayer.colorNumber(i);
@@ -63,6 +63,6 @@ public class GameSettingsBuilder {
             }
         }
 
-        return new GameSettings(players, mapSize, neutralColorsCount);
+        return new GameSettings(playerStartConfigurations, mapSize, neutralColorsCount);
     }
 }

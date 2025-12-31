@@ -3,7 +3,7 @@ package org.mishgan.color_capture.frame;
 import org.mishgan.color_capture.Point;
 import org.mishgan.color_capture.game.GameDataGenerator;
 import org.mishgan.color_capture.game.RandomGameDataGenerator;
-import org.mishgan.color_capture.player.Player;
+import org.mishgan.color_capture.player.PlayerStartConfiguration;
 import org.mishgan.color_capture.settings.GameSettings;
 import org.mishgan.color_capture.settings.GameSettingsBuilder;
 import org.mishgan.color_capture.settings.ViewGameSettings;
@@ -94,10 +94,10 @@ public class NewGameFrame extends JFrame {
 
         GameSettingsBuilder gameSettingsBuilder = new GameSettingsBuilder()
                 .mapSize(mapSize)
-                .addPlayer(new Player()
+                .addPlayer(new PlayerStartConfiguration()
                         .colorNumber(0)
                         .startPosition(Point.create(0, 0)))
-                .addPlayer(new Player()
+                .addPlayer(new PlayerStartConfiguration()
                         .colorNumber(1)
                         .startPosition(Point.create(mapSize.x() - 1, mapSize.y() - 1)))
                 .neutralColorsCount(5);

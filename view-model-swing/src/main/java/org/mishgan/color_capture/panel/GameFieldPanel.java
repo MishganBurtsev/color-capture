@@ -111,4 +111,8 @@ public class GameFieldPanel extends JPanel {
 
         g2d.setColor(previousColor);
     }
+
+    private Point getLogicCoords(Point viewCoords) {
+        return new Point(viewCoords.x / SQUARE_SIZE, viewCoords.y / SQUARE_SIZE);
+    }
 }

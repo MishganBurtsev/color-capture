@@ -1,6 +1,6 @@
 package org.mishgan.color_capture.game;
 
-import org.mishgan.color_capture.player.Player;
+import org.mishgan.color_capture.player.PlayerStartConfiguration;
 import org.mishgan.color_capture.settings.GameSettings;
 
 import java.util.Random;
@@ -27,9 +27,9 @@ public class RandomGameDataGenerator implements GameDataGenerator {
         }
 
         // initialize player start positions
-        for (Player player : gameSettings.getPlayers()) {
-            var startPosition = player.getStartPosition();
-            gameField.setColor(startPosition.x(), startPosition.y(), player.getColorNumber());
+        for (PlayerStartConfiguration playerStartConfiguration : gameSettings.getPlayerStartConfigurations()) {
+            var startPosition = playerStartConfiguration.getStartPosition();
+            gameField.setColor(startPosition.x(), startPosition.y(), playerStartConfiguration.getColorNumber());
         }
 
         return new GameData(gameSettings, gameField);

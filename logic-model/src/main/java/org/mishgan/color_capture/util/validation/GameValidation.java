@@ -1,15 +1,19 @@
-package org.mishgan.color_capture.util;
+package org.mishgan.color_capture.util.validation;
 
 import java.util.Collection;
 
-public class ValidationUtils {
+public class GameValidation {
 
-    private ValidationUtils() {
+    private GameValidation() {
     }
 
     public static void checkNotNull(Object object) {
+        checkNotNull(object, "Object");
+    }
+
+    public static void checkNotNull(Object object, String objectName) {
         if (object == null) {
-            throw new IllegalArgumentException( "Object is null!");
+            throw new IllegalArgumentException(objectName + " is null!");
         }
     }
 

@@ -7,7 +7,7 @@ import org.mishgan.color_capture.util.MyPair;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.mishgan.color_capture.util.ValidationUtils.checkNotNull;
+import static org.mishgan.color_capture.util.validation.GameValidation.checkNotNull;
 
 public class GameField {
 
@@ -87,5 +87,15 @@ public class GameField {
 
         return point.x() >= 0 && point.x() < getXSize() &&
                 point.y() >= 0 && point.y() < getYSize();
+    }
+
+    public void capturePoints(byte color, BytePointSet bytePointSet) {
+        byte[][] points = bytePointSet.getBytePoints();
+        for (int i = 0; i < points.length; i++) {
+            var x = points[i][0];
+            var y = points[i][1];
+
+            field[x][y] = color;
+        }
     }
 }

@@ -4,7 +4,7 @@ import org.mishgan.color_capture.Point;
 
 import java.util.Set;
 
-import static org.mishgan.color_capture.util.ValidationUtils.checkNotNull;
+import static org.mishgan.color_capture.util.validation.GameValidation.checkNotNull;
 
 public class BytePointSet {
     /**
@@ -40,5 +40,9 @@ public class BytePointSet {
         }
 
         return new BytePointSet(pointSet);
+    }
+
+    public byte[][] getBytePoints() {
+        return bytePoints;
     }
 }
