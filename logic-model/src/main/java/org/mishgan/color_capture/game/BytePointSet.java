@@ -2,6 +2,7 @@ package org.mishgan.color_capture.game;
 
 import org.mishgan.color_capture.Point;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.mishgan.color_capture.util.validation.GameValidation.checkNotNull;
@@ -44,5 +45,13 @@ public class BytePointSet {
 
     public byte[][] getBytePoints() {
         return bytePoints;
+    }
+
+    public Set<Point> getPointSet() {
+        Set<Point> pointSet = new HashSet<>();
+        for (int i = 0; i < bytePoints.length; i++) {
+            pointSet.add(Point.create(bytePoints[i][0], bytePoints[i][1]));
+        }
+        return pointSet;
     }
 }

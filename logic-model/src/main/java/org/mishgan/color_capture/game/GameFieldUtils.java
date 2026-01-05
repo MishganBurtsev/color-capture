@@ -24,7 +24,7 @@ public class GameFieldUtils {
      * @param startPoints startPoints of the area
      * @return
      */
-    public Set<Point> getOneColorArea(GameField gameField, Set<Point> startPoints) {
+    public static Set<Point> getOneColorArea(GameField gameField, Set<Point> startPoints) {
         checkNotNull(gameField);
         checkNotEmpty(startPoints);
 
@@ -56,5 +56,9 @@ public class GameFieldUtils {
         }
 
         return resultAreaSet;
+    }
+
+    public static boolean isPlayerColor(byte color, int playerCount) {
+        return color >= 0 && color < playerCount;
     }
 }

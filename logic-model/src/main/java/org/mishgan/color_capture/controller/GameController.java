@@ -26,6 +26,8 @@ public class GameController {
                 isCurrentMoveFinished = false;
                 var playerStrategy = player.getPlayerStartConfiguration().getPlayerStrategy();
 
+                player.calculatePossibleMoves(gameData);
+
                 while (!isCurrentMoveFinished) {
                     var playerInputEvent = playerStrategy.take(gameData);
                     playerInputEvent.update(this);
