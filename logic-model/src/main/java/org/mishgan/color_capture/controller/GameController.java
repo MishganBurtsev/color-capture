@@ -20,7 +20,7 @@ public class GameController {
     public void startGame() {
         isGameRunning = true;
 
-        while (!isGameFinished()) {
+        while (isGameRunning && !isGameFinished()) {
             for (Player player : gameData.getPlayers()) {
                 currentPlayer = player;
                 isCurrentMoveFinished = false;
@@ -46,7 +46,7 @@ public class GameController {
 
     private boolean isGameFinished() {
         // TODO check for winners or draw
-        return isGameRunning;
+        return false;
     }
 
     public Player getCurrentPlayer() {

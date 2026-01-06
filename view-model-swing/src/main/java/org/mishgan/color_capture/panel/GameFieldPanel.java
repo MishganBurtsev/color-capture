@@ -1,6 +1,10 @@
 package org.mishgan.color_capture.panel;
 
+import org.mishgan.color_capture.controller.GameController;
 import org.mishgan.color_capture.game.GameData;
+import org.mishgan.color_capture.player.input_event.ChooseColorPlayerInputEvent;
+import org.mishgan.color_capture.player.input_event.FinishMoveEvent;
+import org.mishgan.color_capture.player.strategy.UiHumanPlayerStrategy;
 import org.mishgan.color_capture.render.RenderCamera;
 import org.mishgan.color_capture.settings.ViewGameSettings;
 
@@ -17,14 +21,18 @@ public class GameFieldPanel extends JPanel {
 
     private final GameData gameData;
     private final ViewGameSettings viewGameSettings;
+    private final GameController gameController;
+
     private final RenderCamera renderCamera = new RenderCamera();
 
     private Point mouseClickedPoint;
     private Point startDragCameraPoint;
 
-    public GameFieldPanel(GameData gameData, ViewGameSettings viewGameSettings) {
+    public GameFieldPanel(GameData gameData, ViewGameSettings viewGameSettings,
+                          GameController gameController) {
         this.viewGameSettings = viewGameSettings;
         this.gameData = gameData;
+        this.gameController = gameController;
 
         // init camera position to the center of game field
         int cameraXCoord = SQUARE_SIZE * gameData.getGameField().getXSize() / 2;
@@ -49,10 +57,16 @@ public class GameFieldPanel extends JPanel {
                     Point myPoint = new Point();
                     AffineTransform t = renderCamera.getTransform();
                     t.inverseTransform(e.getPoint(), myPoint);
+
+                    int logicX = myPoint.x / SQUARE_SIZE;
+                    int logicY = myPoint.y / SQUARE_SIZE;
+
+                    System.out.println("Mouse clicked. Logic X: " + logicX + ", Logic Y: " + logicY);
+
                     if (SwingUtilities.isLeftMouseButton(e)) {
                         // TODO logic to left mouse button
                     } else if (SwingUtilities.isRightMouseButton(e)) {
-                        // TODO logic for right mouse button
+                        handleMouseRightButton(logicX, logicY);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -112,7 +126,22 @@ public class GameFieldPanel extends JPanel {
         g2d.setColor(previousColor);
     }
 
-    private Point getLogicCoords(Point viewCoords) {
-        return new Point(viewCoords.x / SQUARE_SIZE, viewCoords.y / SQUARE_SIZE);
+    private void handleMouseRightButton(int logicX, int logicY) {
+        var gameField = gameData.getGameField();
+
+        if (gameField.hasPoint(logicX, logicY)) {
+            var currentPlayer = gameController.getCurrentPlayer();
+            var currentPlayerStrategy = currentPlayer.getPlayerStartConfiguration().getPlayerStrategy();
+
+            if (currentPlayerStrategy instanceof UiHumanPlayerStrategy uiStrategy) {
+                byte chosenColor = gameField.getColor(logicX, logicY);
+                if (currentPlayer.hasMoveForColor(chosenColor)) {
+                    uiStrategy.publishEvent(new ChooseColorPlayerInputEvent(chosenColor));
+                    uiStrategy.publishEvent(new FinishMoveEvent());
+                } else if (currentPlayer.hasNoAvailableMoves()) {
+                    uiStrategy.publishEvent(new FinishMoveEvent());
+                }
+            }
+        }
     }
 }

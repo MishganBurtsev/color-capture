@@ -24,7 +24,7 @@ public class Player {
     /**
      * K - color, V - set of points of that color
      */
-    private Map<Byte, BytePointSet> possibleMoves;
+    private final Map<Byte, BytePointSet> possibleMoves = new HashMap<>();
 
     public Player(PlayerStartConfiguration playerStartConfiguration) {
         checkNotNull(playerStartConfiguration);
@@ -67,9 +67,10 @@ public class Player {
             throw new GameException("Not found move for chosen color!");
         }
 
-        // recalculating border
-        gameField.capturePoints(chosenColor, chosenMove);
+        var playerColor = playerStartConfiguration.getColorNumber();
+        gameField.capturePoints(playerColor, chosenMove);
 
+        // recalculating border
         var oldBorderPointSet = border.getPointSet();
         var newPointSet = chosenMove.getPointSet();
 
@@ -78,5 +79,13 @@ public class Player {
                 .collect(Collectors.toSet());
 
         border = BytePointSet.create(newBorderSet);
+    }
+
+    public boolean hasMoveForColor(byte color) {
+        return possibleMoves.containsKey(color);
+    }
+
+    public boolean hasNoAvailableMoves() {
+        return possibleMoves.isEmpty();
     }
 }

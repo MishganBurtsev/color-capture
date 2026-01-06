@@ -57,7 +57,7 @@ public class GameField {
 
         return Arrays.stream(Point.Direction.values())
                 .map(point::getNeighbor)
-                .filter(Objects::nonNull)
+                .filter(neighbourPoint -> neighbourPoint != null && hasPoint(neighbourPoint))
                 .toList();
     }
 
@@ -112,12 +112,13 @@ public class GameField {
     }
 
     public boolean hasPoint(Point point) {
-        if (point == null) {
-            throw new IllegalArgumentException("Point is null!");
-        }
+        checkNotNull(point, "Point");
+        return hasPoint(point.x(), point.y());
+    }
 
-        return point.x() >= 0 && point.x() < getXSize() &&
-                point.y() >= 0 && point.y() < getYSize();
+    public boolean hasPoint(int x, int y) {
+        return x >= 0 && x < getXSize() &&
+                y >= 0 && y < getYSize();
     }
 
     public void capturePoints(byte color, BytePointSet bytePointSet) {

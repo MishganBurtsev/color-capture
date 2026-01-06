@@ -4,6 +4,7 @@ import org.mishgan.color_capture.Point;
 import org.mishgan.color_capture.game.GameDataGenerator;
 import org.mishgan.color_capture.game.RandomGameDataGenerator;
 import org.mishgan.color_capture.player.PlayerStartConfiguration;
+import org.mishgan.color_capture.player.strategy.UiHumanPlayerStrategy;
 import org.mishgan.color_capture.settings.GameSettings;
 import org.mishgan.color_capture.settings.GameSettingsBuilder;
 import org.mishgan.color_capture.settings.ViewGameSettings;
@@ -96,10 +97,14 @@ public class NewGameFrame extends JFrame {
                 .mapSize(mapSize)
                 .addPlayer(new PlayerStartConfiguration()
                         .colorNumber(0)
-                        .startPosition(Point.create(0, 0)))
+                        .startPosition(Point.create(0, 0))
+                        .playerStrategy(new UiHumanPlayerStrategy())
+                )
                 .addPlayer(new PlayerStartConfiguration()
                         .colorNumber(1)
-                        .startPosition(Point.create(mapSize.x() - 1, mapSize.y() - 1)))
+                        .startPosition(Point.create(mapSize.x() - 1, mapSize.y() - 1))
+                        .playerStrategy(new UiHumanPlayerStrategy())
+                )
                 .neutralColorsCount(5);
 
         GameSettings gameSettings = gameSettingsBuilder.build();

@@ -1,6 +1,6 @@
 package org.mishgan.color_capture;
 
-public record Point(int x, int y) {
+public record Point(short x, short y) {
 
     /**
      * Check that this point is in rect (0, 0, rect.x, rect.y)
@@ -13,7 +13,7 @@ public record Point(int x, int y) {
 
     public static Point create(int x, int y) {
         if (x >= 0 && y >= 0) {
-            return new Point(x, y);
+            return new Point((short) x, (short) y);
         }
         return null;
     }

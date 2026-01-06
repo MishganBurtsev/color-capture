@@ -1,8 +1,10 @@
 package org.mishgan.color_capture.frame;
 
+import org.mishgan.color_capture.controller.GameController;
 import org.mishgan.color_capture.game.GameData;
 import org.mishgan.color_capture.panel.GameFieldPanel;
 import org.mishgan.color_capture.settings.ViewGameSettings;
+import org.mishgan.color_capture.thread.ColorCaptureViewControllerThread;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -16,6 +18,7 @@ public class GameFrame extends JFrame {
     private GameData gameData;
     private ViewGameSettings viewGameSettings;
     private final Timer repaintTimer;
+    private final ColorCaptureViewControllerThread colorCaptureViewControllerThread;
 
     public GameFrame(GameData gameData, ViewGameSettings viewGameSettings) {
         super("Color Capture");
@@ -35,7 +38,9 @@ public class GameFrame extends JFrame {
         ));
         mainPanel.setLayout(new GridLayout(0, 1, 10, 5));
 
-        var gamePanel = new GameFieldPanel(gameData, viewGameSettings);
+        GameController gameController = new GameController(gameData);
+
+        var gamePanel = new GameFieldPanel(gameData, viewGameSettings, gameController);
         mainPanel.add(gamePanel);
 
         this.addWindowListener(new WindowAdapter() {
@@ -55,10 +60,14 @@ public class GameFrame extends JFrame {
            mainPanel.repaint();
         });
         repaintTimer.start();
+
+        colorCaptureViewControllerThread = new ColorCaptureViewControllerThread(gameController);
+        colorCaptureViewControllerThread.start();
     }
 
     private void backToMainMenu() {
         repaintTimer.stop();
+        colorCaptureViewControllerThread.finish();
         this.dispose();
         Frames.getMainMenuFrame().setVisible(true);
     }
